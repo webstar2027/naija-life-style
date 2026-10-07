@@ -1,0 +1,110 @@
+const defaultState = {
+  name:"Naija Player", trait:"hustler", money:5000, day:1, hour:8,
+  location:"Wuse", selectedLocation:"Wuse",
+  needs:{hunger:82,energy:88,fun:65,social:70,hygiene:86,bladder:80},
+  log:["You arrived in Abuja with ₦5,000 and a fresh start."]
+};
+const locations = {
+  Wuse:{desc:"Busy streets, offices, food and everyday hustle.", actions:[
+    ["Work a shift","+₦1,500 · 3 hrs",{money:1500,energy:-22,hunger:-12,fun:-3}],
+    ["Eat local food","-₦700 · 1 hr",{money:-700,hunger:25,energy:5,bladder:-5}],
+    ["Meet a friend","Free · 1 hr",{social:22,fun:12,energy:-6}]
+  ]},
+  Garki:{desc:"Central Abuja: business, errands and city life.", actions:[
+    ["Office gig","+₦2,000 · 4 hrs",{money:2000,energy:-28,hunger:-14,social:-5}],
+    ["Go shopping","-₦1,000 · 2 hrs",{money:-1000,fun:20,energy:-10}],
+    ["Get a haircut","-₦500 · 1 hr",{money:-500,hygiene:15,fun:8}]
+  ]},
+  Jabi:{desc:"Lake views, restaurants and a social afternoon.", actions:[
+    ["Eat by the lake","-₦1,200 · 2 hrs",{money:-1200,hunger:35,fun:20,social:8,bladder:-8}],
+    ["Hang out","-₦300 · 2 hrs",{money:-300,fun:28,social:25,energy:-12}],
+    ["Take a walk","Free · 1 hr",{fun:12,energy:-8,hunger:-4,hygiene:-3}]
+  ]},
+  Maitama:{desc:"Premium neighbourhood, quiet streets and opportunities.", actions:[
+    ["Business meeting","+₦3,000 · 3 hrs",{money:3000,social:8,energy:-18,hunger:-10}],
+    ["Luxury dinner","-₦2,000 · 2 hrs",{money:-2000,hunger:40,fun:24,social:12}],
+    ["Network","Free · 2 hrs",{social:28,fun:10,energy:-12}]
+  ]},
+  Gwarinpa:{desc:"Residential Abuja with affordable food and entertainment.", actions:[
+    ["Remote work","+₦1,200 · 4 hrs",{money:1200,energy:-24,hunger:-12}],
+    ["Cook at home","-₦250 · 1 hr",{money:-250,hunger:28,energy:4,fun:5}],
+    ["Play football","-₦200 · 2 hrs",{money:-200,fun:30,energy:-18,hunger:-8,social:15}]
+  ]},
+  Asokoro:{desc:"Quiet, upscale Abuja with high-value connections.", actions:[
+    ["Consulting job","+₦4,000 · 4 hrs",{money:4000,energy:-26,hunger:-12,social:-4}],
+    ["Fine dinner","-₦2,500 · 2 hrs",{money:-2500,hunger:45,fun:25,social:15}],
+    ["Rest","Free · 2 hrs",{energy:30,fun:5})
+  ]},
+  Kubwa:{desc:"Affordable living, busy markets and community.", actions:[
+    ["Market hustle","+₦1,000 · 3 hrs",{money:1000,energy:-20,hunger:-12,fun:5}],
+    ["Buy groceries","-₦600 · 1 hr",{money:-600,hunger:15}],
+    ["Visit friends","-₦100 · 2 hrs",{money:-100,social:28,fun:18,energy:-8}]
+  ]},
+  "Central Area":{desc:"The heart of Abuja: offices, landmarks and big opportunities.", actions:[
+    ["Career interview","+₦2,500 · 2 hrs",{money:2500,energy:-12,social:5}],
+    ["Explore the city","-₦300 · 2 hrs",{money:-300,fun:25,energy:-10}],
+    ["Network event","-₦500 · 3 hrs",{money:-500,social:35,fun:15,energy:-14}]
+  ]}
+};
+const labels={hunger:"Hunger",energy:"Energy",fun:"Fun",social:"Social",hygiene:"Hygiene",bladder:"Bladder"};
+let state=load();
+
+function load(){try{return JSON.parse(localStorage.getItem("naijaLifestyleSave"))||structuredClone(defaultState)}catch{return structuredClone(defaultState)}}
+function save(){localStorage.setItem("naijaLifestyleSave",JSON.stringify(state))}
+function clamp(v){return Math.max(0,Math.min(100,v))}
+function money(n){return "₦"+Math.max(0,n).toLocaleString()}
+function timeText(){return `Day ${state.day} · ${String(state.hour).padStart(2,"0")}:00`}
+function tick(hours=1){
+  state.hour+=hours;
+  while(state.hour>=24){state.hour-=24;state.day++}
+  state.needs.hunger=clamp(state.needs.hunger-hours*4);
+  state.needs.energy=clamp(state.needs.energy-hours*3);
+  state.needs.bladder=clamp(state.needs.bladder-hours*3);
+  state.needs.hygiene=clamp(state.needs.hygiene-hours*1.2);
+}
+function log(msg){state.log.unshift(msg);state.log=state.log.slice(0,30)}
+function render(){
+  document.getElementById("greeting").textContent=`Welcome, ${state.name}.`;
+  document.getElementById("locationText").textContent=locations[state.location].desc;
+  document.getElementById("money").textContent=money(state.money);
+  document.getElementById("avatar").textContent=(state.name[0]||"A").toUpperCase();
+  document.getElementById("clock").textContent=timeText();
+  document.getElementById("nameInput").value=state.name;
+  document.getElementById("traitSelect").value=state.trait;
+  const avg=Object.values(state.needs).reduce((a,b)=>a+b,0)/6;
+  document.getElementById("status").textContent=avg>70?"Healthy":avg>40?"Needs attention":"Struggling";
+
+  document.getElementById("meters").innerHTML=Object.entries(labels).map(([key,label])=>`
+    <div class="meter"><div class="meter-top"><span>${label}</span><b>${Math.round(state.needs[key])}</b></div>
+    <div class="bar"><div class="fill ${state.needs[key]<25?"low":""}" style="width:${state.needs[key]}%"></div></div></div>`).join("");
+
+  document.getElementById("locations").innerHTML=Object.entries(locations).map(([name,data])=>`
+    <div class="card ${state.location===name?"selected":""}" data-location="${name}">
+      <b>${name}</b><small>${data.desc}</small>
+    </div>`).join("");
+  document.querySelectorAll("[data-location]").forEach(el=>el.onclick=()=>{
+    state.location=el.dataset.location;state.selectedLocation=state.location;log(`You travelled to ${state.location}.`);save();render();
+  });
+
+  const acts=locations[state.location].actions;
+  document.getElementById("actionHint").textContent=`${state.location} · choose an activity`;
+  document.getElementById("actions").innerHTML=acts.map((a,i)=>`
+    <div class="card action" data-action="${i}"><strong>${a[0]}</strong><span>${a[1]}</span></div>`).join("");
+  document.querySelectorAll("[data-action]").forEach(el=>el.onclick=()=>doAction(Number(el.dataset.action)));
+
+  document.getElementById("log").innerHTML=state.log.map((x,i)=>`<div class="entry"><time>${i===0?"NOW":""}</time>${x}</div>`).join("");
+}
+function doAction(i){
+  const a=locations[state.location].actions[i], effects=a[2];
+  if(effects.money<0 && state.money < Math.abs(effects.money)){log("You don't have enough money for that.");render();return}
+  state.money+=effects.money||0;
+  Object.keys(effects).filter(k=>k!=="money").forEach(k=>state.needs[k]=clamp(state.needs[k]+effects[k]));
+  tick(Number((a[1].match(/(\d+)\s*hr/)||[])[1])||1);
+  log(`${a[0]} in ${state.location}. ${effects.money>0?"You earned "+money(effects.money):effects.money<0?"You spent "+money(Math.abs(effects.money)):""}`);
+  save();render();
+}
+document.getElementById("nameInput").addEventListener("change",e=>{state.name=e.target.value.trim()||"Abujan";save();render()});
+document.getElementById("traitSelect").addEventListener("change",e=>{state.trait=e.target.value;save()});
+document.getElementById("clearLog").onclick=()=>{state.log=[];save();render()};
+document.getElementById("resetBtn").onclick=()=>{if(confirm("Start a completely new life?")){state=structuredClone(defaultState);save();render()}};
+render();

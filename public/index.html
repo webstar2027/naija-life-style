@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Naija Lifestyle</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <img class="site-logo" src="/assets/naija-lifestyle-logo.png" alt="Naija Lifestyle logo">
+      <div>
+      <div class="brand">NAIJA <span>LIFESTYLE</span></div>
+      <div class="tagline">Live your Naija story.</div>
+      </div>
+    </div>
+    <button id="resetBtn" class="ghost">New Life</button>
+  </header>
+
+  <main class="game">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">LIFE SIMULATOR · V1</p>
+        <h1 id="greeting">Welcome to Naija.</h1>
+        <p id="locationText">Start your story and build your life in the capital.</p>
+      </div>
+      <div class="cash">
+        <small>NAIRA</small>
+        <strong id="money">₦5,000</strong>
+      </div>
+    </section>
+
+    <section class="panel character-panel">
+      <div class="avatar" id="avatar">A</div>
+      <div class="identity">
+        <input id="nameInput" maxlength="20" value="Abujan" aria-label="Character name">
+        <select id="traitSelect" aria-label="Character trait">
+          <option value="hustler">Hustler</option>
+          <option value="social">Social</option>
+          <option value="calm">Calm</option>
+          <option value="ambitious">Ambitious</option>
+        </select>
+      </div>
+      <div class="timebox">
+        <small>DAY / TIME</small>
+        <strong id="clock">Monday · 08:00</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><h2>Your needs</h2><span id="status">Healthy</span></div>
+      <div class="meters" id="meters"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><h2>Abuja</h2><span>Choose somewhere to go</span></div>
+      <div class="locations" id="locations"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><h2>What can I do?</h2><span id="actionHint">Pick a location first</span></div>
+      <div class="actions" id="actions"></div>
+    </section>
+
+    <section class="panel log-panel">
+      <div class="section-title"><h2>Life log</h2><button id="clearLog" class="textbtn">Clear</button></div>
+      <div id="log" class="log"></div>
+    </section>
+  </main>
+
+  <footer>Naija Lifestyle · Prototype V1</footer>
+  <script src="/game.js"></script>
+</body>
+</html>
