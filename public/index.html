@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naija Lifestyle — Abuja</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="mark">NL</div><div><b>NAIJA LIFESTYLE</b><small>YOUR NAIJA. YOUR STORY.</small></div></div>
+  <div class="top-actions"><button id="saveBtn">Save</button><button id="newBtn" class="ghost">New Life</button></div>
+</header>
+
+<main>
+<section id="landing" class="landing">
+  <div class="hero">
+    <div>
+      <span class="eyebrow">ABUJA LIFE SIMULATION</span>
+      <h1>Build a life.<br><span>Make your own story.</span></h1>
+      <p>Work, travel, eat, rest, meet people, manage money and grow your life across Abuja.</p>
+      <button id="startBtn" class="primary big">Start Your Life</button>
+    </div>
+    <div class="hero-card">
+      <div class="city-label">ABUJA</div>
+      <div class="skyline">WUSE · JABI · GARKI · MAITAMA</div>
+      <div class="hero-stat"><b id="landingDay">Day 1</b><span>Your story starts here.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="game" class="game hidden">
+  <div class="status-strip">
+    <div><span>DAY</span><b id="day">1</b></div>
+    <div><span>TIME</span><b id="clock">08:00</b></div>
+    <div><span>LOCATION</span><b id="location">Wuse</b></div>
+    <div><span>CASH</span><b id="cash">₦5,000</b></div>
+    <div><span>BANK</span><b id="bank">₦0</b></div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="panel profile">
+        <div class="avatar" id="avatar">A</div>
+        <div><b id="playerName">Abujan</b><small id="jobTitle">Unemployed</small></div>
+      </div>
+      <div class="panel">
+        <h3>Life</h3>
+        <div id="needs"></div>
+      </div>
+      <div class="panel">
+        <h3>Quick view</h3>
+        <div class="mini-row"><span>Home</span><b id="home">Wuse Room</b></div>
+        <div class="mini-row"><span>Career</span><b id="career">Unemployed</b></div>
+        <div class="mini-row"><span>Level</span><b id="level">1</b></div>
+      </div>
+    </aside>
+
+    <section class="world">
+      <div class="world-head">
+        <div><span class="eyebrow">LIVE WORLD</span><h2 id="placeTitle">Wuse</h2><p id="placeDesc">A busy district with offices, shops and everyday Abuja life.</p></div>
+        <div class="weather">ABUJA<br><b>DAYTIME</b></div>
+      </div>
+
+      <div class="map" id="map"></div>
+
+      <div class="panel action-panel">
+        <div class="section-head"><h3 id="actionTitle">What are you doing?</h3><span id="travelHint"></span></div>
+        <div id="actions" class="actions"></div>
+      </div>
+
+      <div class="panel">
+        <div class="section-head"><h3>Life log</h3><button id="clearLog" class="text-btn">Clear</button></div>
+        <div id="log" class="log"></div>
+      </div>
+    </section>
+  </div>
+</section>
+</main>
+
+<script src="game.js"></script>
+</body>
+</html>
