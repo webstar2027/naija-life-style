@@ -1,127 +1,48 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#25b87a">
-  <title>Naija Lifestyle — Live Your Story</title>
-  <link rel="stylesheet" href="/style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17b978">
+<title>Naija Lifestyle — Nigerian Life Simulator</title><link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand-wrap" href="#top" aria-label="Naija Lifestyle home">
-        <img class="site-logo" src="/assets/naija-lifestyle-logo.png" alt="Naija Lifestyle logo">
-        <div class="brand-copy">
-          <div class="brand">NAIJA <span>LIFESTYLE</span></div>
-          <div class="tagline">Live your Naija story.</div>
-        </div>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#world">World</a>
-        <a href="#features">Features</a>
-        <a href="#play">Play</a>
-      </nav>
-      <div class="auth-actions">
-        <button class="btn btn-light" id="loginBtn">Log in</button>
-        <button class="btn btn-primary" id="signupBtn">Sign up</button>
-      </div>
-    </header>
-
-    <main id="top">
-      <section class="hero-card">
-        <div class="hero-copy">
-          <div class="eyebrow">NIGERIAN LIFE SIMULATOR</div>
-          <h1>Build your life.<br><span>Write your Naija story.</span></h1>
-          <p>Start in Abuja, find work, earn money, meet people, explore neighbourhoods and build the life you want.</p>
-          <div class="hero-actions">
-            <button class="btn btn-primary btn-large" id="playNowBtn">Play now</button>
-            <button class="btn btn-outline btn-large" id="learnBtn">Explore the world</button>
-          </div>
-          <div class="trust-row">
-            <span class="live-dot"></span><strong id="onlineCount">1,248</strong> players online
-            <span class="dot-divider"></span>
-            <strong id="visitCount">18,420</strong> visits this week
-          </div>
-        </div>
-        <div class="hero-logo-wrap">
-          <img src="/assets/naija-lifestyle-logo.png" alt="Naija Lifestyle" class="hero-logo">
-        </div>
-      </section>
-
-      <section class="quick-grid" id="features">
-        <button class="quick-card" data-scroll="world"><span class="quick-icon">CITY</span><strong>Explore Abuja</strong><small>Wuse, Garki, Jabi, Maitama and more.</small></button>
-        <button class="quick-card" data-scroll="play"><span class="quick-icon">HOME</span><strong>Build your life</strong><small>Work, rest, spend, earn and grow.</small></button>
-        <button class="quick-card" data-scroll="play"><span class="quick-icon">WORK</span><strong>Find opportunities</strong><small>Choose jobs and make your money.</small></button>
-        <button class="quick-card" data-scroll="play"><span class="quick-icon">SOCIAL</span><strong>Meet people</strong><small>Social features are coming into the world.</small></button>
-      </section>
-
-      <section class="announcement">
-        <div class="announcement-label">CITY NEWS</div>
-        <div id="newsText">Abuja is open. Your first big opportunity could be one move away.</div>
-        <button id="nextNews" class="circle-btn" aria-label="Next news">›</button>
-      </section>
-
-      <section class="section-block" id="world">
-        <div class="section-heading">
-          <div><div class="eyebrow">THE WORLD</div><h2>Choose where your story happens</h2></div>
-          <span>Abuja is the first city</span>
-        </div>
-        <div class="world-grid">
-          <button class="city-card featured" data-location="Wuse"><span>01</span><div><strong>Wuse</strong><small>Business, food and everyday hustle.</small></div></button>
-          <button class="city-card" data-location="Garki"><span>02</span><div><strong>Garki</strong><small>Central business and city life.</small></div></button>
-          <button class="city-card" data-location="Jabi"><span>03</span><div><strong>Jabi</strong><small>Lake views and social afternoons.</small></div></button>
-          <button class="city-card" data-location="Maitama"><span>04</span><div><strong>Maitama</strong><small>Premium streets and connections.</small></div></button>
-          <button class="city-card" data-location="Gwarinpa"><span>05</span><div><strong>Gwarinpa</strong><small>Residential life and entertainment.</small></div></button>
-          <button class="city-card" data-location="Asokoro"><span>06</span><div><strong>Asokoro</strong><small>Quiet, upscale and connected.</small></div></button>
-          <button class="city-card" data-location="Kubwa"><span>07</span><div><strong>Kubwa</strong><small>Markets, community and affordable life.</small></div></button>
-          <button class="city-card" data-location="Central Area"><span>08</span><div><strong>Central Area</strong><small>Landmarks, offices and opportunities.</small></div></button>
-        </div>
-        <div class="future-cities"><span>COMING LATER</span> Lagos · Port Harcourt · Kano · Ibadan · Enugu</div>
-      </section>
-
-      <section class="section-block play-section" id="play">
-        <div class="section-heading">
-          <div><div class="eyebrow">YOUR LIFE</div><h2>Start playing</h2></div>
-          <button id="resetBtn" class="small-reset">New life</button>
-        </div>
-
-        <div class="player-bar panel">
-          <div class="avatar" id="avatar">N</div>
-          <div class="identity">
-            <input id="nameInput" maxlength="20" value="Naija Player" aria-label="Character name">
-            <select id="traitSelect" aria-label="Character trait">
-              <option value="hustler">Hustler</option><option value="social">Social</option><option value="calm">Calm</option><option value="ambitious">Ambitious</option>
-            </select>
-          </div>
-          <div class="location-pill"><span>LOCATION</span><strong id="locationText">Wuse</strong></div>
-          <div class="time-pill"><span id="clock">Day 1 · 08:00</span><strong id="money">₦5,000</strong></div>
-        </div>
-
-        <div class="play-grid">
-          <section class="panel needs-panel">
-            <div class="section-title"><h3>Your needs</h3><span id="status">Healthy</span></div>
-            <div class="meters" id="meters"></div>
-          </section>
-          <section class="panel activity-panel">
-            <div class="section-title"><h3 id="activityTitle">What can I do?</h3><span id="actionHint">Choose an activity</span></div>
-            <div class="actions" id="actions"></div>
-          </section>
-        </div>
-
-        <section class="panel log-panel">
-          <div class="section-title"><h3>Life log</h3><button id="clearLog" class="textbtn">Clear</button></div>
-          <div id="log" class="log"></div>
-        </section>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-brand"><img src="/assets/naija-lifestyle-logo.png" alt="" class="footer-logo"><strong>Naija Lifestyle</strong></div>
-      <div>Play · Work · Live · Grow</div>
-      <div>Prototype V2 · No ads</div>
-    </footer>
-  </div>
-  <script src="/game.js"></script>
-</body>
-</html>
+<div class="site-shell">
+<header class="topbar">
+  <a class="brand-wrap" href="#top"><img class="site-logo" src="/assets/naija-lifestyle-logo.png" alt="Naija Lifestyle"><div><div class="brand">NAIJA <span>LIFESTYLE</span></div><div class="tagline">Your Naija. Your story.</div></div></a>
+  <nav><a href="#world">World</a><a href="#life">My Life</a><a href="#city">City</a><a href="#social">Social</a></nav>
+  <div class="auth-actions"><button class="btn btn-light" id="loginBtn">Log in</button><button class="btn btn-primary" id="signupBtn">Sign up</button></div>
+</header>
+<main id="top">
+<section class="hero-card">
+ <div class="hero-copy"><div class="eyebrow">NIGERIAN LIFE SIMULATOR</div><h1>Live it. <span>Build it.</span><br>Make your Naija story.</h1><p>Create your character, get a job, earn Game Naira, find a home, travel across Abuja and shape your life.</p><div class="hero-actions"><button class="btn btn-primary btn-large" id="playNowBtn">Play now</button><button class="btn btn-outline btn-large" id="worldBtn">Explore Abuja</button></div><div class="trust-row"><span class="live-dot"></span><strong id="onlineCount">1,248</strong> players online <span class="dot-divider"></span><strong id="visitCount">18,420</strong> visits this week</div></div>
+ <div class="hero-logo-wrap"><img src="/assets/naija-lifestyle-logo.png" class="hero-logo" alt="Naija Lifestyle logo"></div>
+</section>
+<section class="quick-grid">
+ <button class="quick-card" data-scroll="world"><b>WORLD</b><strong>Explore Abuja</strong><small>Move between eight neighbourhoods.</small></button>
+ <button class="quick-card" data-scroll="life"><b>CAREER</b><strong>Find a job</strong><small>Work, earn and build your career.</small></button>
+ <button class="quick-card" data-scroll="life"><b>HOME</b><strong>Get a home</strong><small>Start small and upgrade as you grow.</small></button>
+ <button class="quick-card" data-scroll="social"><b>SOCIAL</b><strong>Meet people</strong><small>Friends, relationships and multiplayer are coming.</small></button>
+</section>
+<section class="announcement"><div class="announcement-label">CITY NEWS</div><div id="newsText">Abuja is open. Your first big opportunity could be one move away.</div><button id="nextNews" class="circle-btn">›</button></section>
+<section class="section-block" id="world">
+ <div class="section-heading"><div><div class="eyebrow">THE WORLD</div><h2>Choose where your story happens</h2></div><span>Abuja · Day <b id="worldDay">1</b></span></div>
+ <div class="world-grid" id="cityGrid"></div><div class="future-cities"><span>COMING LATER</span> Lagos · Port Harcourt · Kano · Ibadan · Enugu</div>
+</section>
+<section class="section-block" id="life">
+ <div class="section-heading"><div><div class="eyebrow">YOUR LIFE</div><h2>Build your character and your future</h2></div><button id="resetBtn" class="small-reset">New life</button></div>
+ <div class="player-bar panel"><div class="avatar" id="avatar">N</div><div class="identity"><input id="nameInput" maxlength="20" value="Naija Player" aria-label="Character name"><select id="traitSelect"><option value="hustler">Hustler</option><option value="social">Social</option><option value="calm">Calm</option><option value="ambitious">Ambitious</option></select></div><div class="location-pill"><span>LOCATION</span><strong id="locationText">Wuse</strong></div><div class="time-pill"><span id="clock">Day 1 · 08:00</span><strong id="money">₦5,000</strong></div></div>
+ <div class="life-tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="jobs">Jobs</button><button class="tab" data-tab="home">Home</button><button class="tab" data-tab="transport">Transport</button><button class="tab" data-tab="items">Items</button></div>
+ <div class="tab-panel" id="overviewPanel"><div class="play-grid"><section class="panel needs-panel"><div class="section-title"><h3>Your needs</h3><span id="status">Healthy</span></div><div class="meters" id="meters"></div></section><section class="panel activity-panel"><div class="section-title"><h3 id="activityTitle">Life in Wuse</h3><span id="actionHint">Choose an activity</span></div><div class="actions" id="actions"></div></section></div></div>
+ <div class="tab-panel hidden" id="jobsPanel"><div class="card-grid" id="jobs"></div></div>
+ <div class="tab-panel hidden" id="homePanel"><div class="home-card panel"><div><div class="eyebrow">CURRENT HOME</div><h3 id="homeName">Starter Room</h3><p id="homeDesc">A simple place to rest and recover.</p></div><strong id="homeRent">Rent: ₦500/day</strong></div><div class="card-grid" id="homes"></div></div>
+ <div class="tab-panel hidden" id="transportPanel"><div class="card-grid" id="transport"></div></div>
+ <div class="tab-panel hidden" id="itemsPanel"><div class="card-grid" id="items"></div></div>
+ <section class="panel log-panel"><div class="section-title"><h3>Life log</h3><button id="clearLog" class="textbtn">Clear</button></div><div id="log" class="log"></div></section>
+</section>
+<section class="section-block" id="city"><div class="section-heading"><div><div class="eyebrow">CITY LIFE</div><h2>Abuja is more than a map</h2></div></div><div class="city-feature-grid"><div class="feature-card"><b>JOBS</b><h3>Work and progress</h3><p>Take shifts, build skills and unlock better opportunities.</p></div><div class="feature-card"><b>PROPERTY</b><h3>Make a home</h3><p>Rent, save and upgrade your place as your income grows.</p></div><div class="feature-card"><b>ECONOMY</b><h3>Game Naira</h3><p>Earn and spend fictional in-game money. It has no real-world cash value.</p></div><div class="feature-card"><b>EVENTS</b><h3>City changes</h3><p>News, missions and timed events will make the world feel alive.</p></div></div></section>
+<section class="section-block" id="social"><div class="section-heading"><div><div class="eyebrow">SOCIAL WORLD</div><h2>Meet the Naija Lifestyle community</h2></div></div><div class="social-card panel"><div><h3>Friends and multiplayer</h3><p>Account-based saves, profiles, private chat, shared locations, friends and live player activity are planned for the online version.</p></div><span class="coming">ONLINE SYSTEM — NEXT STAGE</span></div></section>
+</main>
+<footer class="footer"><div class="footer-brand"><img src="/assets/naija-lifestyle-logo.png" alt="" class="footer-logo"><strong>Naija Lifestyle</strong></div><div>Play · Work · Live · Grow</div><div>V3 · No ads</div></footer>
+</div>
+<div class="modal hidden" id="accountModal"><div class="modal-card"><button class="modal-close" id="modalClose">×</button><div class="eyebrow" id="modalEyebrow">ACCOUNT</div><h2 id="modalTitle">Create your Naija Lifestyle account</h2><p id="modalText">For this V3 build, account screens are a preview. Online accounts and cloud saves will be connected with Supabase in the next stage.</p><label>Username<input id="accountName" maxlength="20" placeholder="Your player name"></label><button class="btn btn-primary btn-large" id="accountContinue">Continue</button></div></div>
+<script src="/game.js"></script>
+</body></html>
