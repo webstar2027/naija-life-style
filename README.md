@@ -1,29 +1,28 @@
-# Naija Lifestyle V3
+# Naija Lifestyle V4 — Simulation Foundation
 
-Naija Lifestyle is an original Nigerian browser life-simulation game inspired by the genre of social life simulators.
+This version is the real simulation foundation, not just a landing page.
 
-## V3 playable systems
-- Character name and traits
-- Six needs: hunger, energy, fun, social, hygiene and bladder
-- Game clock and day progression
-- Abuja neighbourhood map
-- Jobs and earnings
-- Homes and rent
-- Transport choices
-- Items/inventory purchases
-- Life log and local save
-- Responsive mobile/desktop interface
+Included:
+- Day/time simulation
+- Six life needs that change as time passes
+- Abuja districts and travel costs/time
+- Home/rest mechanics
+- Jobs, shifts, salaries, XP and levels
+- Cash and bank economy
+- Food, groceries and inventory
+- Social, fun and networking actions
+- Life log
+- Local save/load
+- Responsive mobile/desktop UI
 
-## Planned online stage
-Supabase will be used for real accounts, cloud saves, profiles, chat and multiplayer. Paystack will be added for optional real-money purchases. Game Naira is fictional and has no cash value.
+This is intentionally an original implementation. It uses life-simulation gameplay concepts without copying another game's proprietary code, art, text or assets.
 
-## Run on a server
-Install Node.js, then run:
-
-npm install
-npm start
-
-Open http://localhost:10000
-
-## Deploy
-This project is designed for GitHub + Render. No secret payment keys belong in the public repository.
+Next development layer:
+1. Supabase accounts and cloud saves
+2. Real character creation
+3. Full home/property system
+4. NPCs and relationships
+5. Vehicles and transport
+6. Businesses and multiplayer
+7. Paystack purchases/VIP
+8. More Abuja content and additional Nigerian cities

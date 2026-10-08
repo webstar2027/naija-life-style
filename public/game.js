@@ -1,35 +1,167 @@
-const SAVE='naijaLifestyleV3';
-const DEFAULT={name:'Naija Player',trait:'hustler',money:5000,day:1,hour:8,location:'Wuse',home:'Starter Room',transport:'Walking',needs:{hunger:82,energy:88,fun:65,social:70,hygiene:86,bladder:80},inventory:['Phone'],log:['You arrived in Abuja with ₦5,000 and a fresh start.'],skills:{work:1,social:1},job:'No job'};
-const LOC={
- Wuse:{desc:'Business, food and everyday hustle.',actions:[['Work a shift','+₦1,500 · 3 hrs',{money:1500,energy:-22,hunger:-12,fun:-3}],['Eat local food','-₦700 · 1 hr',{money:-700,hunger:25,energy:5,bladder:-5}],['Meet a friend','Free · 1 hr',{social:22,fun:12,energy:-6}]]},
- Garki:{desc:'Central business and city life.',actions:[['Office gig','+₦2,000 · 4 hrs',{money:2000,energy:-28,hunger:-14,social:-5}],['Shopping','-₦1,000 · 2 hrs',{money:-1000,fun:20,energy:-10}],['Get a haircut','-₦500 · 1 hr',{money:-500,hygiene:15,fun:8}]]},
- Jabi:{desc:'Lake views and social afternoons.',actions:[['Eat by the lake','-₦1,200 · 2 hrs',{money:-1200,hunger:35,fun:20,social:8,bladder:-8}],['Hang out','-₦300 · 2 hrs',{money:-300,fun:28,social:25,energy:-12}],['Take a walk','Free · 1 hr',{fun:12,energy:-8,hunger:-4,hygiene:-3}]]},
- Maitama:{desc:'Premium streets and connections.',actions:[['Business meeting','+₦3,000 · 3 hrs',{money:3000,social:8,energy:-18,hunger:-10}],['Premium dinner','-₦2,000 · 2 hrs',{money:-2000,hunger:40,fun:24,social:12}],['Network','Free · 2 hrs',{social:28,fun:10,energy:-12}]]},
- Gwarinpa:{desc:'Residential life and entertainment.',actions:[['Remote work','+₦1,200 · 4 hrs',{money:1200,energy:-24,hunger:-12}],['Cook at home','-₦250 · 1 hr',{money:-250,hunger:28,energy:4,fun:5}],['Play football','-₦200 · 2 hrs',{money:-200,fun:30,energy:-18,hunger:-8,social:15}]]},
- Asokoro:{desc:'Quiet, upscale and connected.',actions:[['Consulting job','+₦4,000 · 4 hrs',{money:4000,energy:-26,hunger:-12,social:-4}],['Fine dinner','-₦2,500 · 2 hrs',{money:-2500,hunger:45,fun:25,social:15}],['Rest','Free · 2 hrs',{energy:30,fun:5}]]},
- Kubwa:{desc:'Markets, community and affordable life.',actions:[['Market hustle','+₦1,000 · 3 hrs',{money:1000,energy:-20,hunger:-12,fun:5}],['Buy groceries','-₦600 · 1 hr',{money:-600,hunger:15}],['Visit friends','-₦100 · 2 hrs',{money:-100,social:28,fun:18,energy:-8}]]},
- 'Central Area':{desc:'Landmarks, offices and opportunities.',actions:[['Career interview','+₦2,500 · 2 hrs',{money:2500,energy:-12,social:5}],['Explore the city','-₦300 · 2 hrs',{money:-300,fun:25,energy:-10}],['Network event','-₦500 · 3 hrs',{money:-500,social:35,fun:15,energy:-14}]]}
+const KEY='naija_lifestyle_v4';
+
+const districts={
+  Wuse:{desc:'A busy district with offices, shops and everyday Abuja life.',travel:0,actions:[
+    ['Go to work','Work your scheduled shift if you have a job.',0,'work'],
+    ['Eat at a buka','Restore hunger and lose a little cash.',900,'eat'],
+    ['Relax at a cafe','Have a drink and unwind.',700,'fun'],
+    ['Use public transport','Move around Abuja by bus/keke.',300,'transport'],
+    ['Shop for essentials','Buy household essentials.',600,'shop']
+  ]},
+  Garki:{desc:'Government offices, markets and practical everyday businesses.',travel:350,actions:[
+    ['Look for work','Visit a workplace and apply for an available career.',0,'job'],
+    ['Work your shift','Work if your current job is based here.',0,'work'],
+    ['Eat lunch','A quick local meal.',800,'eat'],
+    ['Run an errand','Handle a useful daily task.',250,'errand']
+  ]},
+  Jabi:{desc:'A social district with the lake, restaurants and leisure spots.',travel:500,actions:[
+    ['Visit Jabi Lake','Relax and improve fun and social.',1200,'lake'],
+    ['Meet people','Spend time around the social scene.',500,'social'],
+    ['Eat at a restaurant','A proper meal.',1800,'eat'],
+    ['Shop','Buy something useful.',900,'shop']
+  ]},
+  Maitama:{desc:'An upscale district with offices, homes and premium services.',travel:700,actions:[
+    ['Search for a career','Check higher-paying career opportunities.',0,'job'],
+    ['Network','Meet people who can improve your career path.',300,'network'],
+    ['Premium meal','Eat well and restore several needs.',2500,'meal'],
+    ['View properties','Look at better homes.',0,'property']
+  ]},
+  Gwarinpa:{desc:'A large residential district with affordable everyday life.',travel:500,actions:[
+    ['Rest at home','Recover energy and hygiene at your home.',0,'home'],
+    ['Cook a meal','Use groceries to prepare food.',300,'cook'],
+    ['Buy groceries','Stock up for future meals.',1200,'grocery'],
+    ['Socialise','Visit friends and build relationships.',400,'social']
+  ]},
+  Asokoro:{desc:'A quiet high-value district close to major government areas.',travel:800,actions:[
+    ['Network','Build professional connections.',500,'network'],
+    ['Apply for work','Look for a better career.',0,'job'],
+    ['Relax','Take time away from work.',600,'fun']
+  ]},
+  Kubwa:{desc:'A growing district where living costs are lower.',travel:600,actions:[
+    ['Search for work','Find practical jobs and side hustles.',0,'job'],
+    ['Affordable meal','Eat without spending much.',500,'eat'],
+    ['Rest','Recover energy.',0,'rest'],
+    ['Shop for groceries','Get basic supplies.',800,'grocery']
+  ]},
+  'Central Area':{desc:'The heart of Abuja, with offices, services and city activity.',travel:650,actions:[
+    ['Government office','Handle official paperwork.',300,'errand'],
+    ['Career centre','Search for professional opportunities.',0,'job'],
+    ['Business district','Network and look for opportunities.',500,'network'],
+    ['Eat','Grab a quick meal.',1000,'eat']
+  ]}
 };
-const JOBS=[['Delivery Rider','₦1,200/shift','2 hrs',1200,1],['Office Assistant','₦2,000/shift','4 hrs',2000,1],['Sales Representative','₦2,800/shift','4 hrs',2800,2],['Software Freelancer','₦4,500/shift','5 hrs',4500,3],['Business Consultant','₦6,000/shift','5 hrs',6000,4]];
-const HOMES=[['Starter Room','₦500/day','Simple and affordable.'],['Wuse Apartment','₦1,500/day','Better comfort and location.'],['Jabi Apartment','₦3,000/day','More space and social access.'],['Maitama House','₦7,000/day','Premium home for established players.']];
-const TRANSPORT=[['Walking','Free','Slow but always available.',0,1],['Keke','₦150','Quick local travel.',150,2],['Taxi','₦500','Faster city travel.',500,3],['Private Car','₦2,000','Fast travel with prestige.',2000,4]];
-const ITEMS=[['Phone','₦2,500','Improves social actions.'],['Fresh Outfit','₦1,500','Improves fun and social.'],['Groceries','₦1,000','Useful for meals at home.'],['Gym Pass','₦3,000','Improves energy and hygiene actions.']];
-const LABELS={hunger:'Hunger',energy:'Energy',fun:'Fun',social:'Social',hygiene:'Hygiene',bladder:'Bladder'};
-let state=load(),newsIndex=0;
-const news=['Abuja is open. Your first big opportunity could be one move away.','Wuse is busy today. Jobs and new connections are waiting.','Jabi is becoming a popular place to spend the afternoon.','Save your Game Naira for a better home and faster transport.','More Nigerian cities will unlock as the world expands.'];
-function clone(x){return JSON.parse(JSON.stringify(x))} function load(){try{return {...clone(DEFAULT),...JSON.parse(localStorage.getItem(SAVE))}}catch{return clone(DEFAULT)}}
-function save(){localStorage.setItem(SAVE,JSON.stringify(state))} function clamp(v){return Math.max(0,Math.min(100,v))} function naira(n){return '₦'+Math.max(0,n).toLocaleString()} function clock(){return `Day ${state.day} · ${String(state.hour).padStart(2,'0')}:00`}
-function tick(hours=1){state.hour+=hours;while(state.hour>=24){state.hour-=24;state.day++}state.needs.hunger=clamp(state.needs.hunger-hours*4);state.needs.energy=clamp(state.needs.energy-hours*3);state.needs.bladder=clamp(state.needs.bladder-hours*3);state.needs.hygiene=clamp(state.needs.hygiene-hours*1.2);if(state.home!=='Starter Room')state.needs.energy=clamp(state.needs.energy+hours*.5)}
-function log(msg){state.log.unshift(msg);state.log=state.log.slice(0,40)}
-function actionHours(label){return Number((label.match(/(\d+)\s*hr/)||[])[1])||1}
-function renderCities(){document.getElementById('cityGrid').innerHTML=Object.entries(LOC).map(([name,v],i)=>`<button class="city-card ${state.location===name?'selected':''}" data-location="${name}"><span>${String(i+1).padStart(2,'0')}</span><div><strong>${name}</strong><small>${v.desc}</small></div></button>`).join('');document.querySelectorAll('.city-card').forEach(x=>x.onclick=()=>travel(x.dataset.location))}
-function render(){document.getElementById('avatar').textContent=(state.name[0]||'N').toUpperCase();document.getElementById('money').textContent=naira(state.money);document.getElementById('clock').textContent=clock();document.getElementById('worldDay').textContent=state.day;document.getElementById('nameInput').value=state.name;document.getElementById('traitSelect').value=state.trait;document.getElementById('locationText').textContent=state.location;const avg=Object.values(state.needs).reduce((a,b)=>a+b,0)/6;document.getElementById('status').textContent=avg>70?'Healthy':avg>40?'Needs attention':'Struggling';document.getElementById('meters').innerHTML=Object.entries(LABELS).map(([k,l])=>`<div class="meter"><div class="meter-top"><span>${l}</span><b>${Math.round(state.needs[k])}</b></div><div class="bar"><div class="fill ${state.needs[k]<25?'low':''}" style="width:${state.needs[k]}%"></div></div></div>`).join('');document.getElementById('actions').innerHTML=LOC[state.location].actions.map((a,i)=>`<button class="action" data-action="${i}"><strong>${a[0]}</strong><span>${a[1]}</span></button>`).join('');document.getElementById('activityTitle').textContent=`Life in ${state.location}`;document.getElementById('actionHint').textContent='Choose an activity';document.querySelectorAll('[data-action]').forEach(x=>x.onclick=()=>doAction(+x.dataset.action));document.getElementById('log').innerHTML=state.log.map((x,i)=>`<div class="entry"><time>${i?'':'NOW'}</time>${x}</div>`).join('');document.getElementById('homeName').textContent=state.home;const home=HOMES.find(x=>x[0]===state.home)||HOMES[0];document.getElementById('homeDesc').textContent=home[2];document.getElementById('homeRent').textContent='Rent: '+home[1];renderCities();renderCards();}
-function doAction(i){const a=LOC[state.location].actions[i],e=a[2];if(e.money<0&&state.money<Math.abs(e.money)){log('You do not have enough Game Naira for that.');return render()}state.money+=e.money||0;Object.keys(e).filter(k=>k!=='money').forEach(k=>state.needs[k]=clamp(state.needs[k]+e[k]));tick(actionHours(a[1]));log(`${a[0]} in ${state.location}.${e.money>0?' You earned '+naira(e.money):e.money<0?' You spent '+naira(Math.abs(e.money)):''}`);save();render()}
-function travel(name){if(name===state.location)return;state.location=name;log(`You travelled to ${name} using ${state.transport}.`);tick(state.transport==='Walking'?1:0);save();render();document.getElementById('life').scrollIntoView({behavior:'smooth'})}
-function renderCards(){document.getElementById('jobs').innerHTML=JOBS.map(j=>`<button class="market-card" data-job="${j[0]}"><b>CAREER</b><strong>${j[0]}</strong><small>${j[1]} · ${j[2]}</small><span>Work shift</span></button>`).join('');document.getElementById('homes').innerHTML=HOMES.map(h=>`<button class="market-card" data-home="${h[0]}"><b>PROPERTY</b><strong>${h[0]}</strong><small>${h[1]}</small><span>${state.home===h[0]?'Current home':'Move here'}</span></button>`).join('');document.getElementById('transport').innerHTML=TRANSPORT.map(t=>`<button class="market-card" data-transport="${t[0]}"><b>TRAVEL</b><strong>${t[0]}</strong><small>${t[1]} · ${t[2]}</small><span>${state.transport===t[0]?'Selected':'Select'}</span></button>`).join('');document.getElementById('items').innerHTML=ITEMS.map(i=>`<button class="market-card" data-item="${i[0]}"><b>ITEM</b><strong>${i[0]}</strong><small>${i[1]} · ${i[2]}</small><span>Buy</span></button>`).join('');document.querySelectorAll('[data-job]').forEach(x=>x.onclick=()=>work(x.dataset.job));document.querySelectorAll('[data-home]').forEach(x=>x.onclick=()=>moveHome(x.dataset.home));document.querySelectorAll('[data-transport]').forEach(x=>x.onclick=()=>chooseTransport(x.dataset.transport));document.querySelectorAll('[data-item]').forEach(x=>x.onclick=()=>buyItem(x.dataset.item))}
-function work(job){const j=JOBS.find(x=>x[0]===job);if(!j)return;if(state.money<0)return;state.money+=j[3];state.skills.work+=.2;state.needs.energy=clamp(state.needs.energy-18);state.needs.hunger=clamp(state.needs.hunger-10);tick(Number(j[2].match(/\d+/)[0]));state.job=job;log(`You worked as a ${job} and earned ${naira(j[3])}.`);save();render()}
-function moveHome(home){const h=HOMES.find(x=>x[0]===home);const daily=Number(h[1].replace(/[^0-9]/g,''));if(state.money<daily&&home!==state.home){log('You need more Game Naira before moving into that home.');return render()}if(home!==state.home){state.money-=daily;state.home=home;state.needs.energy=clamp(state.needs.energy+15);log(`You moved into ${home}. You paid ${naira(daily)} for the first day.`);save();render()}}
-function chooseTransport(t){state.transport=t;log(`You selected ${t} for city travel.`);save();render()}
-function buyItem(item){const it=ITEMS.find(x=>x[0]===item);const cost=Number(it[1].replace(/[^0-9]/g,''));if(state.money<cost){log('You do not have enough Game Naira for that item.');return render()}state.money-=cost;if(!state.inventory.includes(item))state.inventory.push(item);if(item==='Phone')state.needs.social=clamp(state.needs.social+8);if(item==='Fresh Outfit')state.needs.fun=clamp(state.needs.fun+8);if(item==='Groceries')state.needs.hunger=clamp(state.needs.hunger+12);if(item==='Gym Pass')state.needs.energy=clamp(state.needs.energy+10);log(`You bought ${item} for ${naira(cost)}.`);save();render()}
-function openModal(mode){document.getElementById('accountModal').classList.remove('hidden');document.getElementById('modalEyebrow').textContent=mode==='login'?'WELCOME BACK':'CREATE ACCOUNT';document.getElementById('modalTitle').textContent=mode==='login'?'Log in to Naija Lifestyle':'Create your Naija Lifestyle account';document.getElementById('modalText').textContent='This V3 build saves your life locally. Online accounts, cloud saves and multiplayer will be connected with Supabase in the next stage.';document.getElementById('accountContinue').onclick=()=>{const n=document.getElementById('accountName').value.trim();if(n){state.name=n;save();render()}document.getElementById('accountModal').classList.add('hidden');document.getElementById('life').scrollIntoView({behavior:'smooth'})}}
-document.getElementById('loginBtn').onclick=()=>openModal('login');document.getElementById('signupBtn').onclick=()=>openModal('signup');document.getElementById('modalClose').onclick=()=>document.getElementById('accountModal').classList.add('hidden');document.getElementById('playNowBtn').onclick=()=>document.getElementById('life').scrollIntoView({behavior:'smooth'});document.getElementById('worldBtn').onclick=()=>document.getElementById('world').scrollIntoView({behavior:'smooth'});document.querySelectorAll('[data-scroll]').forEach(x=>x.onclick=()=>document.getElementById(x.dataset.scroll).scrollIntoView({behavior:'smooth'}));document.getElementById('nextNews').onclick=()=>{newsIndex=(newsIndex+1)%news.length;document.getElementById('newsText').textContent=news[newsIndex]};document.getElementById('nameInput').addEventListener('change',e=>{state.name=e.target.value.trim()||'Naija Player';save();render()});document.getElementById('traitSelect').addEventListener('change',e=>{state.trait=e.target.value;save()});document.getElementById('clearLog').onclick=()=>{state.log=[];save();render()};document.getElementById('resetBtn').onclick=()=>{if(confirm('Start a completely new life?')){state=clone(DEFAULT);save();render()}};document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));document.getElementById(btn.dataset.tab+'Panel').classList.remove('hidden')});render();
+
+const jobs=[
+ {name:'Retail Assistant',place:'Wuse',salary:22000,shift:[9,17],xp:1,req:0},
+ {name:'Office Assistant',place:'Garki',salary:35000,shift:[8,16],xp:2,req:1},
+ {name:'Customer Support',place:'Central Area',salary:42000,shift:[9,17],xp:2,req:2},
+ {name:'Sales Executive',place:'Maitama',salary:55000,shift:[9,17],xp:3,req:3},
+ {name:'Tech Support',place:'Jabi',salary:70000,shift:[10,18],xp:4,req:5}
+];
+
+let state={
+  started:false,name:'Abujan',day:1,hour:8,minute:0,location:'Wuse',
+  cash:5000,bank:0,home:'Wuse Room',career:null,level:1,xp:0,
+  needs:{hunger:82,energy:90,fun:65,social:60,hygiene:85,bladder:75},
+  inventory:{groceries:2},log:['Day 1 — You arrived in Abuja with ₦5,000 and a place to sleep.']
+};
+
+const $=id=>document.getElementById(id);
+function money(n){return '₦'+Math.max(0,Math.round(n)).toLocaleString('en-NG')}
+function save(){localStorage.setItem(KEY,JSON.stringify(state)); log('Game saved.');}
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x)state={...state,...x,needs:{...state.needs,...x.needs},inventory:{...state.inventory,...x.inventory}}}catch(e){}}
+function log(s){state.log.unshift(`Day ${state.day} ${String(state.hour).padStart(2,'0')}:${String(state.minute).padStart(2,'0')} — ${s}`);state.log=state.log.slice(0,60);renderLog()}
+function advance(min){
+  const total=state.hour*60+state.minute+min;
+  const oldDay=state.day;
+  state.day+=Math.floor(total/1440);
+  const t=total%1440; state.hour=Math.floor(t/60); state.minute=t%60;
+  if(state.day>oldDay) dailyReset(oldDay,state.day);
+  state.needs.hunger=Math.max(0,state.needs.hunger-min*.012);
+  state.needs.energy=Math.max(0,state.needs.energy-min*.008);
+  state.needs.fun=Math.max(0,state.needs.fun-min*.003);
+  state.needs.social=Math.max(0,state.needs.social-min*.002);
+  state.needs.hygiene=Math.max(0,state.needs.hygiene-min*.004);
+  state.needs.bladder=Math.max(0,state.needs.bladder-min*.006);
+}
+function dailyReset(){if(state.career){state.bank+=state.career.salary;log(`Your salary of ${money(state.career.salary)} was paid into your bank.`)}}
+function canPay(cost){if(state.cash<cost){log(`You need ${money(cost-state.cash)} more cash.`);return false}return true}
+function spend(cost){state.cash-=cost}
+function effect(obj){for(const [k,v] of Object.entries(obj))state.needs[k]=Math.max(0,Math.min(100,state.needs[k]+v))}
+function travel(to){
+  if(to===state.location)return;
+  const cost=districts[to].travel;
+  if(!canPay(cost))return;
+  spend(cost);advance(20+Math.round(cost/100));state.location=to;log(`You travelled to ${to} for ${money(cost)}.`);render();
+}
+function action(type,label,cost){
+  if(cost&&!canPay(cost))return;
+  if(cost)spend(cost);
+  switch(type){
+    case'eat':effect({hunger:38,energy:3});advance(25);log(`You ate. Hunger improved.`);break;
+    case'meal':effect({hunger:55,energy:8,fun:8});advance(35);log(`You had a premium meal.`);break;
+    case'lake':effect({fun:35,social:15,energy:-5});advance(90);log(`You spent time at Jabi Lake.`);break;
+    case'social':effect({social:30,fun:15,energy:-8});advance(70);log(`You socialised and met people.`);break;
+    case'fun':effect({fun:28,energy:-5});advance(60);log(`You relaxed.`);break;
+    case'home':effect({energy:35,hygiene:25,fun:8,bladder:20});advance(120);log(`You rested at home.`);break;
+    case'rest':effect({energy:28});advance(90);log(`You rested.`);break;
+    case'work':work();return;
+    case'job':showJobs();return;
+    case'network':effect({social:15,fun:8});advance(60);state.xp+=1;log(`You networked and gained career experience.`);levelUp();break;
+    case'transport':effect({energy:-2});advance(25);log(`You used local transport for an errand.`);break;
+    case'shop':state.inventory.groceries=(state.inventory.groceries||0)+1;advance(25);log(`You bought an item for later.`);break;
+    case'grocery':state.inventory.groceries=(state.inventory.groceries||0)+3;advance(30);log(`You bought groceries.`);break;
+    case'cook':if(!state.inventory.groceries){log('You have no groceries.');return}state.inventory.groceries--;effect({hunger:48,energy:5});advance(40);log(`You cooked a meal at home.`);break;
+    case'errand':advance(45);effect({bladder:-5,energy:-4});log(`You handled an errand.`);break;
+    case'property':log('Property system foundation: better homes will unlock as your career and savings grow.');break;
+  }
+  levelUp();render();
+}
+function work(){
+  if(!state.career){log('You do not have a job yet. Visit a career location and apply.');return}
+  const [start,end]=state.career.shift;
+  if(state.location!==state.career.place){log(`Your job is in ${state.career.place}. Travel there first.`);return}
+  if(state.hour<start||state.hour>=end){log(`Your shift is ${start}:00–${end}:00. Come back during work hours.`);return}
+  const mins=Math.min(120,(end-state.hour)*60-state.minute);
+  advance(Math.max(30,mins));effect({energy:-25,hunger:-20,hygiene:-10,bladder:-15,fun:-12});state.cash+=Math.round(state.career.salary/4);state.xp+=state.career.xp;
+  log(`You worked a shift and earned ${money(Math.round(state.career.salary/4))}.`);levelUp();render();
+}
+function showJobs(){
+  const available=jobs.filter(j=>j.req<=state.level);
+  const msg=available.map((j,i)=>`${i+1}. ${j.name} — ${money(j.salary)}/day — ${j.place} — ${j.shift[0]}:00-${j.shift[1]}:00`).join('\\n');
+  const pick=prompt(`Available careers:\\n\\n${msg}\\n\\nType the number to apply.`);
+  const idx=Number(pick)-1;
+  if(available[idx]){
+    const j=available[idx];state.career=j;state.xp+=1;log(`You got a job as ${j.name}. Salary: ${money(j.salary)} per day.`);render();
+  }
+}
+function levelUp(){const needed=state.level*5;if(state.xp>=needed){state.level++;log(`Career level increased to ${state.level}.`)}}
+function render(){
+  $('landing').classList.toggle('hidden',state.started);$('game').classList.toggle('hidden',!state.started);
+  $('day').textContent=state.day;$('clock').textContent=`${String(state.hour).padStart(2,'0')}:${String(state.minute).padStart(2,'0')}`;
+  $('location').textContent=state.location;$('cash').textContent=money(state.cash);$('bank').textContent=money(state.bank);
+  $('playerName').textContent=state.name;$('avatar').textContent=(state.name[0]||'A').toUpperCase();
+  $('jobTitle').textContent=state.career?state.career.name:'Unemployed';$('home').textContent=state.home;
+  $('career').textContent=state.career?state.career.name:'Unemployed';$('level').textContent=state.level;
+  $('landingDay').textContent=`Day ${state.day}`;
+  renderNeeds();renderMap();renderActions();renderLog();
+}
+function renderNeeds(){
+ const labels={hunger:'Hunger',energy:'Energy',fun:'Fun',social:'Social',hygiene:'Hygiene',bladder:'Bladder'};
+ $('needs').innerHTML=Object.entries(state.needs).map(([k,v])=>`<div class="need"><div class="need-top"><span>${labels[k]}</span><b>${Math.round(v)}</b></div><div class="bar"><div class="fill" style="width:${v}%"></div></div></div>`).join('');
+}
+function renderMap(){
+ $('map').innerHTML=Object.keys(districts).map(d=>`<button class="district ${d===state.location?'active':''}" onclick="travel('${d.replace(/'/g,"\\'")}')"><b>${d}</b><small>${d===state.location?'You are here':'Travel '+money(districts[d].travel)}</small></button>`).join('');
+ const p=districts[state.location];$('placeTitle').textContent=state.location;$('placeDesc').textContent=p.desc;
+}
+function renderActions(){
+ const p=districts[state.location];
+ $('actions').innerHTML=p.actions.map(a=>`<button class="action" onclick="action('${a[3]}','${a[0].replace(/'/g,"\\'")}',${a[2]})"><b>${a[0]}</b><small>${a[1]}</small>${a[2]?`<small class="cost">${money(a[2])}</small>`:''}</button>`).join('');
+ $('travelHint').textContent=`${state.inventory.groceries||0} groceries`;
+}
+function renderLog(){$('log').innerHTML=state.log.map(x=>`<div>${x}</div>`).join('')}
+$('startBtn').onclick=()=>{state.started=true;log('Welcome to Abuja. Find a job, manage your needs and build your life.');render()}
+$('saveBtn').onclick=save;
+$('newBtn').onclick=()=>{if(confirm('Start a completely new life?')){localStorage.removeItem(KEY);location.reload()}}
+$('clearLog').onclick=()=>{state.log=[];renderLog()}
+load();render();
