@@ -1,31 +1,30 @@
-# Naija Lifestyle — V1
+# Naija Lifestyle
 
-A browser-based Nigerian life-simulator prototype.
+Naija Lifestyle is a Nigerian browser life-simulation game. Abuja is the first playable city, with more Nigerian cities planned.
+
+## Current build
+- Redesigned social-game style home page
+- Naija Lifestyle branding and logo
+- Abuja locations and playable activities
+- Character name and traits
+- Money, needs, time and life log
+- Responsive layout for phone and desktop
+- No ads
 
 ## Run locally
-1. Install Node.js.
-2. Open Terminal in this folder.
-3. Run `npm install`.
-4. Run `npm start`.
-5. Open http://localhost:10000
+This project uses Node.js and Express. Install Node.js LTS, then run:
 
-## V1 features
-- Character name and trait
-- Nigerian locations (Abuja first)
-- Money in naira
-- Hunger, energy, fun, social, hygiene and bladder meters
-- Jobs and activities
-- In-game time
-- Local save in the browser
-- Responsive mobile/desktop UI
+```bash
+npm install
+npm start
+```
 
-## Next production stages
-1. Supabase authentication and cloud saves
-2. Player profiles and inventory
-3. Proper database/game-state validation
-4. Multiplayer chat and player presence
-5. Leaderboards
-6. Properties, vehicles and businesses
-7. Missions and progression
-8. Admin dashboard
-9. Production deployment and custom domain
+Open http://localhost:10000
+
+## Roadmap
+- Accounts and login
+- Supabase cloud saves and realtime features
+- Player profiles and social systems
+- More cities
+- Properties, cars, businesses and jobs
+- Paystack payments for optional premium features
